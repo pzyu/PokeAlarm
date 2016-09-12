@@ -122,7 +122,8 @@ class Alarm_Manager(Thread):
 		#If already alerted, skip
 		if pkmn['encounter_id'] in self.pokemon:
 			return
-			
+		#print pkmn;	
+
 		#Mark the pokemon as seen along with exipre time
 		dissapear_time = datetime.utcfromtimestamp(pkmn['disappear_time']);
 		self.pokemon[pkmn['encounter_id']] = dissapear_time
@@ -169,7 +170,9 @@ class Alarm_Manager(Thread):
 			'time_left': timestamps[0],
 			'12h_time': timestamps[1],
 			'24h_time': timestamps[2],
-			'dir': get_dir(lat,lng)
+			'dir': get_dir(lat,lng),
+			'iv': "Attack: " + str(pkmn['iv_attack']) + ", Defence: " + str(pkmn['iv_defense']) + ", Stamina: " + str(pkmn['iv_stamina']) + ", Perfection: " + str(int((pkmn['iv_attack'] + pkmn['iv_defense'] + pkmn['iv_stamina']) / float(45) * 100)) + "%",
+			'moveset': str(pkmn['move_1']) + " / " + str(pkmn['move_2'])
 		}
 		pkmn_info = self.optional_arguments(pkmn_info)
 			
