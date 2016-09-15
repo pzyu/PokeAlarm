@@ -160,20 +160,36 @@ class Alarm_Manager(Thread):
 		#Trigger the notifcations
 		log.info(name + " notication was triggered!")
 		timestamps = get_timestamps(dissapear_time)
-		pkmn_info = {
-			'id': str(pkmn_id),
- 			'pkmn': name,
-			'lat' : "{}".format(repr(lat)),
-			'lng' : "{}".format(repr(lng)),
-			'gmaps': get_gmaps_link(lat, lng),
-			'dist': "%d%s" % (dist, 'yd' if config['UNITS'] == 'imperial' else 'm'),
-			'time_left': timestamps[0],
-			'12h_time': timestamps[1],
-			'24h_time': timestamps[2],
-			'dir': get_dir(lat,lng),
-			'iv': "Attack: " + str(pkmn['iv_attack']) + ", Defence: " + str(pkmn['iv_defense']) + ", Stamina: " + str(pkmn['iv_stamina']) + ", Perfection: " + str(int((pkmn['iv_attack'] + pkmn['iv_defense'] + pkmn['iv_stamina']) / float(45) * 100)) + "%",
-			'moveset': str(pkmn['move_1']) + " / " + str(pkmn['move_2'])
-		}
+		if len(pkmn) > 8:
+			pkmn_info = {
+				'id': str(pkmn_id),
+	 			'pkmn': name,
+				'lat' : "{}".format(repr(lat)),
+				'lng' : "{}".format(repr(lng)),
+				'gmaps': get_gmaps_link(lat, lng),
+				'dist': "%d%s" % (dist, 'yd' if config['UNITS'] == 'imperial' else 'm'),
+				'time_left': timestamps[0],
+				'12h_time': timestamps[1],
+				'24h_time': timestamps[2],
+				'dir': get_dir(lat,lng),
+				'iv': "Attack: " + str(pkmn['iv_attack']) + ", Defence: " + str(pkmn['iv_defense']) + ", Stamina: " + str(pkmn['iv_stamina']) + ", Perfection: " + str(int((pkmn['iv_attack'] + pkmn['iv_defense'] + pkmn['iv_stamina']) / float(45) * 100)) + "%",
+				'moveset': str(pkmn['move_1']) + " / " + str(pkmn['move_2'])
+			}
+		else:
+			pkmn_info = {
+				'id': str(pkmn_id),
+	 			'pkmn': name,
+				'lat' : "{}".format(repr(lat)),
+				'lng' : "{}".format(repr(lng)),
+				'gmaps': get_gmaps_link(lat, lng),
+				'dist': "%d%s" % (dist, 'yd' if config['UNITS'] == 'imperial' else 'm'),
+				'time_left': timestamps[0],
+				'12h_time': timestamps[1],
+				'24h_time': timestamps[2],
+				'dir': get_dir(lat,lng),
+				'iv': 'IV: ???',
+				'moveset': '???'
+			}
 		pkmn_info = self.optional_arguments(pkmn_info)
 			
 		for alarm in self.alarms:
